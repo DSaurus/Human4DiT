@@ -41,9 +41,9 @@ Please fill the [request form](https://docs.google.com/forms/d/e/1FAIpQLScMfdqBL
 
 By requesting for the link, you acknowledge that you have read the agreement, understand it, and agree to be bound by them. If you do not agree with these terms and conditions, you must not download and/or use the Dataset.
 
-## 2. Dataset Processing
+## 2. Video Dataset Processing
 
-The code for processing dataset in the ```data_scripts``` folder.
+The code for processing video dataset in the ```data_scripts``` folder.
 
 ### Download Videos from Internet
 
@@ -56,11 +56,11 @@ python download.py --csv-file HUMAN4DIT_VIDEO_CSV \
     --download-nums DOWNLOAD_NUMS
 ```
 
-For cookies, you should open your browser and sign in [BiliBili]("https://www.bilibili.com/) to get BiliBili cookie. If you don't have cookies, you can still download videos. However, the resolution will be limited in 720P.
+For cookies, you should open your browser and sign in [www.bilibili.com]("https://www.bilibili.com/) to get BiliBili cookie. If you don't have cookies, you can still download videos. However, the resolution will be limited in 720P.
 
 ### Cut Videos
 
-We use ```ffmpeg+NVENC``` (CUDA) to cut videos, which is much more efficient than CPU. If you only has CPU, you should open ```video_cut.py``` and change ```hevc_nvenc``` in line 124 to other CPU-only encoders. Once you finished downloading videos, you can run the following code to cut videos.
+We use ```ffmpeg+NVENC```(CUDA) to cut videos, which is much more efficient than CPU. If you only has CPU, you should open ```video_cut.py``` and change ```hevc_nvenc``` in line 124 to other CPU-only encoders. Once you finished downloading videos, you can run the following code to cut videos.
 
 ```
 python video_cut.py --csv-file HUMAN4DIT_VIDEO_CSV \
@@ -81,6 +81,29 @@ python render_smpl.py --num-devices GPU_NUMS \
     --smpl-dir SMPL_FOLDER \
     --output-dir RENDER_RESULTS_PATH \
     --smpl-model-path PATH_TO_basicModel_neutral_lbs_10_207_0_v1.0.0.pkl
+```
+
+## 3. 3D Dataset Processing
+
+The code for processing 3D dataset is in the ```data_scripts``` folder. we provide ```render_thuman.py``` and ```render_thuman_smpl.py``` to render free-view videos for 3D human scans.
+
+### Render Free-view RGB Videos
+
+We use ```pyrender``` to render free-view RGB videos for each 3D human scan. You should install ```pyrender``` first and then you can run the following code to get these videos.
+
+```
+python render_thuman.py --obj-dir 3D_OBJ_FOLDER  \
+    --output-dir OUTPUT_RGB_RENDER_FOLDER
+```
+
+### Render Free-view Videos of SMPL Normal Maps
+
+We use the same Pytorch3D renderer for SMPL normal maps rendering. You should install ```pyrender``` first and then you can run the following code to get videos of SMPL normal maps.
+
+```
+python render_thuman_smpl.py --obj-dir 3D_OBJ_FOLDER \
+    --camera-dir OUTPUT_RGB_RENDER_FOLDER \
+    --output-dir OUTPUT_NORMAL_RENDER_FOLDER
 ```
 
 ## Citation
