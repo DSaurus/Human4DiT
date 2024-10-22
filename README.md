@@ -18,7 +18,7 @@ This repository contains the official implementation of ”*Human4DiT: 360-degre
 - [ ] Human4DiT model and inference code
 - [ ] Human4DiT training code
 
-## Human4DiT Dataset
+## 1. Human4DiT Dataset
 
 ### Dataset Structure
 **Human4DiT dataset** consists of 10K monocular human videos from the internet, 5k 3D human scans captured by a dense DLSR rig and 100 4D human characters. 
@@ -41,7 +41,7 @@ Please fill the [request form](https://docs.google.com/forms/d/e/1FAIpQLScMfdqBL
 
 By requesting for the link, you acknowledge that you have read the agreement, understand it, and agree to be bound by them. If you do not agree with these terms and conditions, you must not download and/or use the Dataset.
 
-## Dataset Processing
+## 2. Dataset Processing
 
 The code for processing dataset in the ```data_scripts``` folder.
 
@@ -49,7 +49,11 @@ The code for processing dataset in the ```data_scripts``` folder.
 
 First download the csv file of ```Human4DiT-Video```. Then install [yt-dlp](https://github.com/yt-dlp/yt-dlp), which is a tool to download videos. You can download all videos using the following command:
 ```
-python download.py --csv-file HUMAN4DIT_VIDEO_CSV --yt-dlp-path YT_DLP_PATH --output-dir OUTPUT_PATH --cookies COOKIES_PATH --download-nums DOWNLOAD_NUMS
+python download.py --csv-file HUMAN4DIT_VIDEO_CSV \
+    --yt-dlp-path YT_DLP_PATH \
+    --output-dir OUTPUT_PATH \
+    --cookies COOKIES_PATH \
+    --download-nums DOWNLOAD_NUMS
 ```
 
 For cookies, you should open your browser and sign in [BiliBili]("https://www.bilibili.com/) to get BiliBili cookie. If you don't have cookies, you can still download videos. However, the resolution will be limited in 720P.
@@ -59,7 +63,11 @@ For cookies, you should open your browser and sign in [BiliBili]("https://www.bi
 We use ```ffmpeg+NVENC``` (CUDA) to cut videos, which is much more efficient than CPU. If you only has CPU, you should open ```video_cut.py``` and change ```hevc_nvenc``` in line 124 to other CPU-only encoders. Once you finished downloading videos, you can run the following code to cut videos.
 
 ```
-python video_cut.py --csv-file HUMAN4DIT_VIDEO_CSV --num-devices YOUR_GPU_NUMS --process-nums MULTIPROCESSING_NUMS --input-video-dir VIDEO_DOWNLOAD_DIR --output-video-dir CUT_VIDEO_FOLDER
+python video_cut.py --csv-file HUMAN4DIT_VIDEO_CSV \
+    --num-devices YOUR_GPU_NUMS \
+    --process-nums MULTIPROCESSING_NUMS \
+    --input-video-dir VIDEO_DOWNLOAD_DIR \
+    --output-video-dir CUT_VIDEO_FOLDER
 ```
 
 ### Render SMPL Normals from SMPL Sequences
@@ -67,7 +75,12 @@ python video_cut.py --csv-file HUMAN4DIT_VIDEO_CSV --num-devices YOUR_GPU_NUMS -
 To render SMPL normals, you should first install [SMPLX](https://github.com/vchoutas/smplx/tree/main) and download the SMPL model file ```basicModel_neutral_lbs_10_207_0_v1.0.0.pkl```. You need also install [Pytorch3D](https://github.com/facebookresearch/pytorch3d) which can render SMPL normal maps with GPU. Finally you can download all SMPL sequnece files into SMPL_FOLDER and use the following code to render SMPL normal videos.
 
 ```
-python render_smpl.py --num-devices GPU_NUMS --process-nums MULTIPROCESSING_NUMS --video-dir CUT_VIDEO_FOLDER --smpl-dir SMPL_FOLDER --output-dir RENDER_RESULTS_PATH --smpl-model-path PATH_TO_basicModel_neutral_lbs_10_207_0_v1.0.0.pkl
+python render_smpl.py --num-devices GPU_NUMS \
+    --process-nums MULTIPROCESSING_NUMS \
+    --video-dir CUT_VIDEO_FOLDER \
+    --smpl-dir SMPL_FOLDER \
+    --output-dir RENDER_RESULTS_PATH \
+    --smpl-model-path PATH_TO_basicModel_neutral_lbs_10_207_0_v1.0.0.pkl
 ```
 
 ## Citation
