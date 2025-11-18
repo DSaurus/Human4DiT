@@ -30,12 +30,12 @@ model = dict(
 )
 vae = dict(
     type="VideoAutoencoderKL",
-    from_pretrained="/data/pangyouxin/checkpoints/sdxl-vae",
+    from_pretrained="./checkpoints/sdxl-vae",
     sub_folder=None,
 )
 image_encoder = dict(
     type="clip-image",
-    from_pretrained="/data/pangyouxin/checkpoints/stable-video-diffusion-img2vid-xt"
+    from_pretrained="./checkpoints/stable-video-diffusion-img2vid-xt"
 )
 scheduler = dict(
     num_train_timesteps=1000,
