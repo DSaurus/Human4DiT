@@ -1,5 +1,5 @@
 # [Human4DiT: 360-degree Human Video Generation with 4D Diffusion Transformer (SIGGRAPH ASIA 2024 Journal Track)](https://human4dit.github.io)
-[Ruizhi Shao*](https://dsaurus.github.io/saurus/), [Youxin Pang*](), [Zerong Zheng](http://zhengzerong.github.io/), [Jingxiang Sun](https://mrtornado24.github.io), [Yebin Liu](http://www.liuyebin.com/).
+[Ruizhi Shao*](https://dsaurus.github.io/saurus/), [Youxin Pang*](https://carlyx.github.io/), [Zerong Zheng](http://zhengzerong.github.io/), [Jingxiang Sun](https://mrtornado24.github.io), [Yebin Liu](http://www.liuyebin.com/).
 
 [![report](https://img.shields.io/badge/arxiv-report-red)](https://arxiv.org/abs/2405.17405)
 
@@ -15,7 +15,7 @@ This repository contains the official implementation of ”*Human4DiT: 360-degre
 ### TODO
 - [x] Human4DiT dataset
 - [x] Human4DiT dataset preprocssing code
-- [ ] Human4DiT model and inference code
+- [x] Human4DiT model and inference code
 - [ ] Human4DiT training code
 
 ## 1. Human4DiT Dataset
@@ -112,11 +112,13 @@ python render_thuman_smpl.py --obj-dir 3D_OBJ_FOLDER \
 ```ref_img``` represents the input reference image. 
 For condition preparing, including normal maps and dwpose maps, please refer to ```./opensora/datasets/datasets_image.py``` for more details.
 Also, you should change the path in ```./configs/opensora/train/4dtrans.py``` to your path.
+You can download the pre-trained ckpt [here](https://huggingface.co/piscesyxp/human4dit).
 
 ```
+CUDA_VISIBLE_DEVICES=1 \
     python inference_long.py configs/opensora/train/4dtrans.py \
-    --ckpt-path ./checkpoints/humandit/ema.pt \     # the ckpt of human4dit                              
-    --ref_img ./test0614/1.jpg                      
+    --ckpt-path ./checkpoints/humandit/ema.pt \
+    --ref_img ./test0614/1.jpg                    
 ```
 
 
