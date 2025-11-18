@@ -106,6 +106,20 @@ python render_thuman_smpl.py --obj-dir 3D_OBJ_FOLDER \
     --output-dir OUTPUT_NORMAL_RENDER_FOLDER
 ```
 
+
+## 4. Inference
+
+```ref_img``` represents the input reference image. 
+For condition preparing, including normal maps and dwpose maps, please refer to ```./opensora/datasets/datasets_image.py``` for more details.
+
+
+```
+    python inference_long.py configs/opensora/train/4dtrans.py \
+    --ckpt-path ./checkpoints/humandit/ema.pt \     # the ckpt of human4dit                              
+    --ref_img ./test0614/1.jpg                      
+```
+
+
 ## Citation
 ```
 @article{shao2024human4dit,
