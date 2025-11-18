@@ -58,16 +58,13 @@ class DatasetIMGFromCSV(torch.utils.data.Dataset):
 
         self.samples = []
         # for al in data_name:
-        pa = f'/data/pangyouxin/code/humansora/test0614/vid'
+        pa = f'./test0614/vid'
         self.samples1 = os.listdir(pa)
         # self.samples1 = sorted(self.samples1)
         self.samples1 = [os.path.join(pa,i) for i in self.samples1]
         self.samples = self.samples + self.samples1
         print(self.samples)
         print("LEN DATA NOW")
-        print(len(self.samples))
-
-        print("LEN DATASET ALL") 
         print(len(self.samples))
 
 
@@ -121,11 +118,12 @@ class DatasetIMGFromCSV(torch.utils.data.Dataset):
         index = index % len(self.samples)
         folder_name = self.samples[index]
 
-        pppp = folder_name.split('/')[-2][-4:]
-        naa = folder_name.split('/')[-1]
-        vid_na = os.path.join(f'/data/pangyouxin/code/humansora/test0614/vid', naa)
-        normal_path = os.path.join(f'/data/pangyouxin/code/humansora/test0614/vid_normal', naa)
-        pose_path = os.path.join(f'/data/pangyouxin/code/humansora/test0614/vid_pose', naa)
+        # pppp = folder_name.split('/')[-2][-4:]
+        # naa = folder_name.split('/')[-1]
+        naa = '1.mp4'
+        vid_na = os.path.join(f'./test0614/vid', naa)
+        normal_path = os.path.join(f'./test0614/vid_normal', naa)
+        pose_path = os.path.join(f'./test0614/vid_pose', naa)
 
         video_reader = VideoReader(vid_na)
         normal_reader = VideoReader(normal_path)
@@ -170,18 +168,18 @@ class DatasetIMGFromCSV(torch.utils.data.Dataset):
         video_list = []
         cond_video_list = []
         for mv_id in range(self.multiview):
-            if mv_id != 0:
-                ref = self.random_get_ref_path(sample[0], int(sample[4]))
-                total_frames = ref["length"]
-                path = ref["path"]
-                pose_path = ref["pose_path"]
-                normal_path = ref["normal_path"]
+            # if mv_id != 0:
+            #     ref = self.random_get_ref_path(sample[0], int(sample[4]))
+            #     total_frames = ref["length"]
+            #     path = ref["path"]
+            #     pose_path = ref["pose_path"]
+            #     normal_path = ref["normal_path"]
 
             if start_frame_ind is None:
                 sample_start_frame_ind, sample_end_frame_ind = self.temporal_sample(total_frames)
-                assert (
-                    sample_end_frame_ind - sample_start_frame_ind >= self.num_frames
-                ), f"{path} with index {index} has not enough frames."
+                # assert (
+                #     sample_end_frame_ind - sample_start_frame_ind >= self.num_frames
+                # ), f"{path} with index {index} has not enough frames."
             else:
                 sample_start_frame_ind = start_frame_ind
                 sample_end_frame_ind = end_frame_ind
@@ -205,7 +203,7 @@ class DatasetIMGFromCSV(torch.utils.data.Dataset):
 
 
 
-            ### normal dwpose
+            ### normal normal
             # normal_video = read_video(normal_path, frame_indice)
             normal_video = []
             for index in frame_indice:
@@ -218,7 +216,6 @@ class DatasetIMGFromCSV(torch.utils.data.Dataset):
             
             # cat pose and normal
             cond_video = torch.cat([cond_pose_video, cond_normal_video], dim=0)
-
 
             #  load  rgb video
             # video = read_video(path, frame_indice)
